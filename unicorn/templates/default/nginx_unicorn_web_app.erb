@@ -30,7 +30,7 @@ server {
     }
 
     <% if node[:nginx] && node[:nginx][:maintenance] -%>
-    if ($request_uri = "/ping") {
+    if ($request_uri ~ "/ping$") {
       return 200 "pong";
     }
 
