@@ -34,11 +34,10 @@ server {
       return 200 "pong";
     }
 
-    if (-f $document_root/maintenance.html) {
+    if ($request_uri !~ "\.png$") {
       return 503;
     }
     <% end -%>
-
 
     # If you don't find the filename in the static files
     # Then request it from the unicorn server
