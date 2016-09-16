@@ -25,7 +25,7 @@ server {
   <% end %>
 
   location / {
-  <% unless @application[:allow_http] %>
+  <% unless node[:nginx] && node[:nginx][:allow_http] -%>
     if ($http_x_forwarded_proto = 'http') {
       return 301 https://$server_name$request_uri;
     }
