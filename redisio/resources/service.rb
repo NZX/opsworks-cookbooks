@@ -1,10 +1,8 @@
 #
-# Cookbook Name::       redis
-# Description::         Install From Ubuntu Package -- easy but lags in version
-# Recipe::              install_from_package
-# Author::              Benjamin Black
+# Cookbook Name:: redisio
+# Resource::service
 #
-# Copyright 2011, Benjamin Black
+# Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +17,11 @@
 # limitations under the License.
 #
 
-unless node[:platform_version].to_f < 9.0
-  package "redis-server" do
-    action :install
-  end
+actions :start, :stop, :restart, :enable, :disable
+
+attribute :server_port, :name_attribute => true
+
+def initialize(name, run_context=nil)
+  super
+  @action = :start
 end

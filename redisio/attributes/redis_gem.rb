@@ -1,10 +1,8 @@
 #
-# Cookbook Name::       redis
-# Description::         Base configuration for redis
-# Recipe::              default
-# Author::              Benjamin Black (<b@b3k.us>)
+# Cookbook Name:: redisio
+# Attribute::redis_gem
 #
-# Copyright 2009, Benjamin Black
+# Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,16 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'metachef'
+#Allow for a redis ruby gem to be installed
+default['redisio']['gem']['name'] = 'redis'
+default['redisio']['gem']['version'] = nil
 
-standard_dirs('redis.server') do
-  directories   :conf_dir
-end
-
-template "#{node[:redis][:conf_dir]}/redis.conf" do
-  source        "redis.conf.erb"
-  owner         "root"
-  group         "root"
-  mode          "0644"
-  variables     :redis => node[:redis], :redis_server => node[:redis][:server]
-end

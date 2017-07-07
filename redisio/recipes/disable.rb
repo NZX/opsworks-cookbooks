@@ -1,10 +1,9 @@
 #
-# Cookbook Name::       redis
-# Description::         Client support for Redis database
-# Recipe::              client
-# Author::              Benjamin Black (<b@b3k.us>)
+# Cookbook Name:: redisio
+# Recipe:: disable
 #
-# Copyright 2009, Benjamin Black
+# Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
+#
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,5 +18,13 @@
 # limitations under the License.
 #
 
-gem_package     'redis'
-gem_package     'redis-namespace'
+redis = node['redisio']
+
+redis['servers'].each do |current_server|
+  server_name = current_server["name"] || current_server["port"]
+  resource = resources("service[redis#{server_name}]")
+  resource.action Array(resource.action)
+  resource.action << :stop
+  resource.action << :disable
+end
+
