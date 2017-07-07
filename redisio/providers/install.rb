@@ -68,6 +68,7 @@ def configure
 
     #Merge the configuration defaults with the provided array of configurations provided
     current = current_defaults_hash.merge(current_instance_hash)
+    current['logfile'] ||= '/var/log/sidekiq.log'
 
     #Merge in the default maxmemory
     node_memory_kb = node["memory"]["total"]
