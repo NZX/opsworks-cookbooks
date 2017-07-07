@@ -35,10 +35,11 @@ end
 default['redisio']['safe_install'] = true
 
 #Tarball and download related defaults
-default['redisio']['mirror'] = "https://redis.googlecode.com/files"
+# http://download.redis.io/releases/redis-3.2.9.tar.gz
+default['redisio']['mirror'] = "http://download.redis.io/releases"
 default['redisio']['base_name'] = 'redis-'
 default['redisio']['artifact_type'] = 'tar.gz'
-default['redisio']['version'] = '2.6.10'
+default['redisio']['version'] = '3.2.9'
 default['redisio']['base_piddir'] = '/var/run/redis'
 
 #Default settings for all redis instances, these can be overridden on a per server basis in the 'servers' hash
@@ -58,13 +59,13 @@ default['redisio']['default_settings'] = {
   'unixsocketperm'         => nil,
   'timeout'                => '0',
   'loglevel'               => 'verbose',
-  'logfile'                => nil,
+  'logfile'                => '/var/log/sidekiq.log',
   'syslogenabled'          => 'yes',
   'syslogfacility'         => 'local0',
   'shutdown_save'          => false,
   'save'                   => nil, # Defaults to ['900 1','300 10','60 10000'] inside of template.  Needed due to lack of hash subtraction
   'slaveof'                => nil,
-  'job_control'            => 'initd', 
+  'job_control'            => 'upstart', 
   'masterauth'             => nil,
   'slaveservestaledata'    => 'yes',
   'replpingslaveperiod'    => '10',

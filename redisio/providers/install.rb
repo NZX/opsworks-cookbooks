@@ -90,6 +90,16 @@ def configure
       rdb_file = "#{current['datadir']}/dump-#{server_name}.rdb"  
 
       #Create the owner of the redis data directory
+
+      group current['group'] do
+        action :create
+      end
+
+      user current['user'] do
+        action :create
+        group current['group']
+      end
+
       user current['user'] do
         comment 'Redis service account'
         supports :manage_home => true
