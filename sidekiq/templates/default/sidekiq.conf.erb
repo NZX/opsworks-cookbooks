@@ -18,8 +18,8 @@ start on started network-services
 stop on stopping network-services
 
 # change to match your deployment user
-setuid <%= @user %>
-setgid <%= @group %>
+# setuid <%= @user %>
+# setgid <%= @group %>
 
 respawn
 respawn limit 3 30
@@ -34,5 +34,5 @@ env <%= k %>=<%= (v || '').to_s.gsub('"', '\\"') %>
 <% end %>
 
 script
-  exec <%= @start_command %>
+  exec su -s /bin/bash -c 'exec "$0" "$@"' <%= @user %> -- <%= @start_command %>
 end script
